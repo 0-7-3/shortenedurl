@@ -9,11 +9,13 @@
   <%= f.label :name, 'Name' %><br>
   <%= f.text_field :name %><br>
 
-   <%= f.label :url_original, 'Original Url' %><br>
+  <%= f.label :url_original, 'Original Url' %><br>
   <%= f.text_field :url_original %><br>
 
-<br>
-<br>
+  <%= f.label :no_of_access, 'Acess Limit' %><br>
+  <%= f.text_field :no_of_access %><br>
 
+<br>
+<br>
   <%= f.submit "Create short url" %>
 <% end %>
