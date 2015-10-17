@@ -1,0 +1,26 @@
+<h1>Welcome To Shortened Url App</h1>
+<%= link_to "Add Url", new_url_path%><br>
+<table style="width:50%">
+  <tr>
+    <th>Name</th>
+    <th>Short Url</th> 
+    <th>Action</th>
+  </tr>
+  <% @urls.try(:each) do |url|%>
+  <tr>
+    <td><%= url.name %></td>
+    <td><a href="<%= short_url(url.url_original)%>" target="_blank"><%= short_url(url.url_original)%></a></td>
+    <td><%= link_to 'Delete', url, method: :delete %></td>
+  </tr>
+  <% end %>
+</table>
+
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+}
+</style>

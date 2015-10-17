@@ -1,0 +1,19 @@
+<% if @url.errors.any? %>
+<ul>
+  <% @url.errors.full_messages.each do |msg| %>
+    <li style="color: red;"><%= msg %></li>
+  <% end %>
+</ul>
+<% end %>
+<%= form_for @url, url: {action: "create"} do |f| %>
+  <%= f.label :name, 'Name' %><br>
+  <%= f.text_field :name %><br>
+
+   <%= f.label :url_original, 'Original Url' %><br>
+  <%= f.text_field :url_original %><br>
+
+<br>
+<br>
+
+  <%= f.submit "Create short url" %>
+<% end %>
