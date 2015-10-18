@@ -1,9 +1,6 @@
 class UrlsController < ApplicationController
   before_action :find_url, only: [:destroy]
   def index
-    request.remote_ip
-    puts "================================================================"
-    puts request.remote_ip
     @urls = Url.all
   end
 

@@ -66,13 +66,7 @@ class Shortener::ShortenedUrlsController < ActionController::Base
   end
 
   def check_ip(url)
-
     ip = Url.find(url.owner_id).try(:ip)
-    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-    puts ip
-    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-    puts request.remote_ip
-
     if ip && ip == request.remote_ip
       return true
     else
