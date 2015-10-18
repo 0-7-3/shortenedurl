@@ -1,1 +1,1 @@
- json.short_url short_url(@data.url)
+ json.short_url short_url_custom(@url.url_original, @url.shortened_urls.first)
