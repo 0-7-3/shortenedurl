@@ -49,7 +49,7 @@ class Shortener::ShortenedUrlsController < ActionController::Base
 
 
   def check_access_limit(url)
-    limit = Url.find(url.owner_id).try(:no_of_access)
+    limit = Url.find(url.owner_id).try(:no_of_access) rescue nil
     if limit && limit <= 0 
       redirect_to urls_path, :flash => { :success => "Reach Maximum Limit Of Access" }
       return false
@@ -59,19 +59,25 @@ class Shortener::ShortenedUrlsController < ActionController::Base
   end
 
   def reduce_limit(url)
-    limit = Url.find(url.owner_id)
-    total = limit.no_of_access ? limit.no_of_access : 0 
-    limit.update_columns(no_of_access: total - 1)
-    return true
+    limit = Url.find(url.owner_id) rescue nil
+    if limit 
+      total = limit.no_of_access ? limit.no_of_access : 0 
+      limit.update_columns(no_of_access: total - 1)
+      return true
+    end
   end
 
   def check_ip(url)
-    ip = Url.find(url.owner_id).try(:ip)
-    if ip && ip == request.remote_ip
-      return true
+    ip = Url.find(url.owner_id).try(:ip) rescue nil
+    if ip.present?
+      if ip == request.remote_ip
+        return true
+      else
+        redirect_to urls_path, :flash => { :success => "You dont have access this url by this ip" }
+        return false
+      end
     else
-      redirect_to urls_path, :flash => { :success => "You dont have access this url by this ip" }
-      return false
+      return true
     end
   end
 end
