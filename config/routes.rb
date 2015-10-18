@@ -16,6 +16,14 @@ Rails.application.routes.draw do
     resources :urls
     resources :articles
 
+    namespace :api do
+      resources :urls do
+        collection do
+          post :shortener_url
+        end
+      end
+    end
+
   # Example resource route with options:
   #   resources :products do
   #     member do

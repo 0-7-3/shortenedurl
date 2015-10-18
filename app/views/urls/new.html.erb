@@ -1,21 +1,34 @@
-<% if @url.errors.any? %>
-<ul>
-  <% @url.errors.full_messages.each do |msg| %>
-    <li style="color: red;"><%= msg %></li>
-  <% end %>
-</ul>
-<% end %>
-<%= form_for @url, url: {action: "create"} do |f| %>
-  <%= f.label :name, 'Name' %><br>
-  <%= f.text_field :name %><br>
-
-  <%= f.label :url_original, 'Original Url' %><br>
-  <%= f.text_field :url_original %><br>
-
-  <%= f.label :no_of_access, 'Acess Limit' %><br>
-  <%= f.text_field :no_of_access %><br>
-
-<br>
-<br>
-  <%= f.submit "Create short url" %>
-<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <% if @url.errors.any? %>
+      <ul>
+        <% @url.errors.full_messages.each do |msg| %>
+        <li style="color: red;"><%= msg %></li>
+        <% end %>
+      </ul>
+      <% end %>
+      <%= form_for @url, url: {action: "create"}, html: {class: "form-horizontal", role: "form"} do |f| %>
+      <div class="form-group">
+        <%= f.label :name, 'Name', class: "control-label" %><br>
+        <%= f.text_field :name, class: "form-control" %><br>
+      </div>
+      <div class="form-group">
+        <%= f.label :url_original, 'Original Url', class: "control-label" %><br>
+        <%= f.text_field :url_original, class: "form-control"  %><br>
+      </div>
+      <div class="form-group">
+        <%= f.label :no_of_access, 'Acess Limit', class: "control-label" %><br>
+        <%= f.text_field :no_of_access, class: "form-control"  %><br>
+      </div>
+      <div class="form-group">
+        <%= f.label :ip, 'IP', class: "control-label" %><br>
+        <%= f.text_field :ip, class: "form-control"  %><br>
+      </div>
+      <br>
+      <br>
+      <%= f.submit "Create short url", class: "btn btn-default" %>
+      <% end %>
+    </div>
+  </div>
+</div>

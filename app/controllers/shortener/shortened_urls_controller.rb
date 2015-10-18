@@ -12,6 +12,7 @@ class Shortener::ShortenedUrlsController < ActionController::Base
 
     if sl
       if check_access_limit(sl)
+        if check_ip(sl)
         # don't want to wait for the increment to happen, make it snappy!
         # this is the place to enhance the metrics captured
         # for the system. You could log the request origin
@@ -36,6 +37,7 @@ class Shortener::ShortenedUrlsController < ActionController::Base
         reduce_limit(sl)
         redirect_to url, status: :moved_permanently
       end
+    end
     else
       # if we don't find the shortened link, redirect to the root
       # make this configurable in future versions
@@ -58,8 +60,24 @@ class Shortener::ShortenedUrlsController < ActionController::Base
 
   def reduce_limit(url)
     limit = Url.find(url.owner_id)
-    limit.update_columns(no_of_access: limit.no_of_access - 1)
+    total = limit.no_of_access ? limit.no_of_access : 0 
+    limit.update_columns(no_of_access: total - 1)
     return true
   end
 
+  def check_ip(url)
+
+    ip = Url.find(url.owner_id).try(:ip)
+    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+    puts ip
+    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    puts request.remote_ip
+
+    if ip && ip == request.remote_ip
+      return true
+    else
+      redirect_to urls_path, :flash => { :success => "You dont have access this url by this ip" }
+      return false
+    end
+  end
 end

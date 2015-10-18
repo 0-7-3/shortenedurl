@@ -8,9 +8,9 @@
 </head>
 <body>
 <% if flash.present? %>
-<div id="flash_messages">
+<div>
   <% flash.each do |key, value| %>
-    <%= content_tag(:div, value, :class => "flash #{key}") %>
+    <%= content_tag(:div, value, :class => "alert alert-info") %>
   <% end %>
   <% end %>
 </div>

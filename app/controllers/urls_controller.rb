@@ -23,7 +23,7 @@ class UrlsController < ApplicationController
 
   def destroy
     @url.destroy
-    redirect_to urls_path
+    redirect_to urls_path, :flash => { :success => "Successfully Deleted" }
   end
 
   private
